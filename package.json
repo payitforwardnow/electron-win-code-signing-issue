@@ -6,9 +6,28 @@
   "scripts": {
     "start": "electron .",
     "build:win64": "electron-builder --win --x64",
-    "build": "export WIN_CSC_LINK=file:///Users/popeye/Data/MyProjects/____electron/ofni/sign/SDS.p12; read -s -p \"Certificate Password: \" certPassword; export WIN_CSC_KEY_PASSWORD=\"$certPassword\"; npm run build:win64"
+    "build": "export WIN_CSC_LINK=./certs/MyCert.p12; read -s -p \"Certificate Password: \" certPassword; export WIN_CSC_KEY_PASSWORD=\"$certPassword\"; npm run build:win64"
   },
   "repository": "https://github.com/payitforwardnow/electron-win-code-signing-issue.git",
+  "build": {
+    "asar": true,
+    "appId": "com.securediscovery.issue02",
+    "win": {
+      "target": "nsis",
+      "rfc3161TimeStampServer": "http://timestamp.digicert.com"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowElevation": true,
+      "installerHeaderIcon": "./build/installerHeaderIcon.ico",
+      "deleteAppDataOnUninstall": true,
+      "runAfterFinish": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "menuCategory": true
+    }
+  },
   "keywords": [
     "Electron",
     "quick",
@@ -20,6 +39,6 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "2.0.7",
-    "electron-builder":"20.27.1"
+    "electron-builder": "20.27.1"
   }
 }
